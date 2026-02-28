@@ -6,9 +6,10 @@ A collection of scripts for MikroTik RouterOS 7.x.
 
 Each solution is organized into its own directory containing the script source (`.rsc`) and a specific `README.md` with installation and configuration instructions.
 
-| Script | Category | Status | Documentation |
-| :--- | :--- | :--- | :--- |
-| **Backup & Rotation** | Maintenance | Stable | [View Guide](./backup/README.md) |
+| Script | Description |
+| :--- | :--- |
+| [**Backup & Rotation**](./backup/README.md) | A simple backup solution for MikroTik devices running **RouterOS 7.x** to automate system backups and configuration exports with a basic retention policy. |
+| [**Mounted FS Dependency Wait**](./container-mount-wait/README.md) | This script starts the specified containers after the network mount (or any mount really) is reachable (using a very rudimentary check method). |
 
 ## How to Use This Repository
 
