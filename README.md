@@ -1,6 +1,6 @@
 # MikroTik Scripts
 
-A collection of scripts for MikroTik RouterOS 7.x.
+A collection of scripts for MikroTik RouterOS 7.x (specifically tested on 7.21.3).
 
 ## Repository Structure
 

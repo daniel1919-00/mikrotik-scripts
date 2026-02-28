@@ -1,5 +1,5 @@
 # MikroTik Backup
-A simple backup solution for MikroTik devices running **RouterOS 7.x** (specifically tested on 7.21.3) to automate system backups and configuration exports with a basic retention policy.
+A simple backup solution to automate system backups and configuration exports with a basic retention policy.
 
 ## Features
 
