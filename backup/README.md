@@ -34,7 +34,7 @@ The script can be configured to match your needs with the following local variab
 To run this script automatically every 24 hours:
 
 1.  Navigate to **System -> Scheduler**.
-2.  Click the **+ (Add)** button.
+2.  Click the **New** button.
 3.  **Name**: `run-daily-backup`.
 4.  **Start Time**: Set to your preferred time (e.g., `03:00:00`).
 5.  **Interval**: Set to `1d 00:00:00`.

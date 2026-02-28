@@ -31,7 +31,7 @@ The script can be configured to match your needs with the following local variab
 To run this script automatically on every system boot:
 
 1. Navigate to **System -> Scheduler**.
-2. Click the **+ (Add)** button.
+2. Click the **New** button.
 3. **Name**: `run-containers-on-boot`.
 4. **Start Time**: Set to `startup`.
 5. **Interval**: Set to `00:00:00` (to ensure it only runs once per boot).
