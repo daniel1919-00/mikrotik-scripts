@@ -32,16 +32,10 @@
         :foreach containerId in=[/container find] do={
             :local containerName [/container get $containerId name]
             
-            # Check if container name is in the exceptions array
+            # Skip exceptions
             :if ([:typeof [:find $exceptions $containerName]] = "nil") do={
-                :local containerStatus [/container get $containerId status]
-                
-                :if ($containerStatus = "stopped") do={
-                    :log info "$logPrefix Starting container: $containerName"
-                    /container start $containerId
-                } else={
-                    :log info "$logPrefix Container $containerName is already $containerStatus. Skipping."
-                }
+                :log info "$logPrefix Starting container: $containerName"
+                /container start $containerId
             } else={
                 :log info "$logPrefix Skipping excluded container: $containerName"
             }
