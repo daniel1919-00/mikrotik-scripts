@@ -4,8 +4,8 @@
 # Path must be relative to /
 :local mountProbeFile "mountPoint/probeFile.txt"
 
-# Array of container names to start
-:local containers {"adguard"; "nginx"}
+# Define container names to skip during auto-start
+:local exceptions {"certbot"; "temp-test-container"}
 
 #The total wait time for the NAS to become available in seconds (minimum 10)
 :local maxWaitTimeSeconds 300
@@ -27,11 +27,24 @@
 
         :log info "$logPrefix Waiting $mountsStabilizationWaitTime for mounts to stabilize..."
         :delay $mountsStabilizationWaitTime
-        :log info "$logPrefix Starting containers..."
+        :log info "$logPrefix Scanning for containers..."
         
-        :foreach containerName in=$containers do={
-            :log info "$logPrefix Starting container: $containerName"
-            /container start [find name=$containerName]
+        :foreach containerId in=[/container find] do={
+            :local containerName [/container get $containerId name]
+            
+            # Check if container name is in the exceptions array
+            :if ([:typeof [:find $exceptions $containerName]] = "nil") do={
+                :local containerStatus [/container get $containerId status]
+                
+                :if ($containerStatus = "stopped") do={
+                    :log info "$logPrefix Starting container: $containerName"
+                    /container start $containerId
+                } else={
+                    :log info "$logPrefix Container $containerName is already $containerStatus. Skipping."
+                }
+            } else={
+                :log info "$logPrefix Skipping excluded container: $containerName"
+            }
         }
         
         :log info "$logPrefix All containers started successfully."

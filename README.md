@@ -9,7 +9,7 @@ Each solution is organized into its own directory containing the script source (
 | Script | Description |
 | :--- | :--- |
 | [**Backup & Rotation**](./backup/README.md) | A simple backup solution for MikroTik devices running **RouterOS 7.x** to automate system backups and configuration exports with a basic retention policy. |
-| [**Mounted FS Dependency Wait**](./container-mount-wait/README.md) | This script starts the specified containers after the network mount (or any mount really) is reachable (using a very rudimentary check method). |
+| [**Mounted FS Dependency Wait**](./containers-mount-wait/README.md) | Periodically probes for a specific file on a network mount (e.g. NAS) to ensure storage stability before dynamically starting all found containers (Exceptions can be configured). |
 
 ## How to Use This Repository
 
