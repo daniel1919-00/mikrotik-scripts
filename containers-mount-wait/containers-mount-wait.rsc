@@ -4,6 +4,9 @@
 # Path must be relative to /
 :local mountProbeFile "mountPoint/probeFile.txt"
 
+# Define containers that MUST start first (in order)
+:local priority {"priority_container1"; "priority_container2"}
+
 # Define container names to skip during auto-start
 :local exceptions {"certbot"; "temp-test-container"}
 
@@ -27,17 +30,33 @@
 
         :log info "$logPrefix Waiting $mountsStabilizationWaitTime for mounts to stabilize..."
         :delay $mountsStabilizationWaitTime
+
+        :log info "$logPrefix Starting priority stack..."
+        :foreach priorityContainerName in=$priority do={
+            :local pId [/container find name=$priorityContainerName]
+            :if ([:len $pId] > 0) do={
+                :log info "$logPrefix Starting priority container: $priorityContainerName"
+                /container start $pId
+                # Brief delay to allow container to initialize
+                :delay 10s
+            }
+        }
+
         :log info "$logPrefix Scanning for containers..."
-        
         :foreach containerId in=[/container find] do={
             :local containerName [/container get $containerId name]
+            :local isException [:find $exceptions $containerName]
+            :local isPriority [:find $priority $containerName]
             
             # Skip exceptions
-            :if ([:typeof [:find $exceptions $containerName]] = "nil") do={
+            :if (([:typeof $isException] = "nil") && ([:typeof $isPriority] = "nil")) do={
                 :log info "$logPrefix Starting container: $containerName"
                 /container start $containerId
+                :delay 1s
             } else={
-                :log info "$logPrefix Skipping excluded container: $containerName"
+                :if ([:typeof $isException] != "nil") do={
+                    :log info "$logPrefix Skipping excluded container: $containerName"
+                }
             }
         }
         
