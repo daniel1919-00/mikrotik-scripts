@@ -86,7 +86,8 @@
         :if ($count > $maxOldBackups) do={
             :local deleteAmount ($count - $maxOldBackups)
             :for i from=1 to=$deleteAmount do={
-                :local fileToDelete [$getOldest $backupPath $ext "$backupPath/$baseFileName.$ext"]
+                :local protectedName ($backupPath . "/" . $baseFileName . "." . $ext)
+                :local fileToDelete [$getOldest $backupPath $ext $protectedName]
                 :if ([:len $fileToDelete] > 0) do={
                     :log info "Backup: Rotating out oldest $ext: $fileToDelete"
                     /file remove $fileToDelete
